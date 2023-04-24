@@ -4,10 +4,6 @@ import categories from '../fake-data/all-categories';
 export const Categories = ({ handleCategoryNameClick }) => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(null);
 
-  const handleClickForBackgroundColor = index => {
-    setSelectedCategoryIndex(index);
-  };
-
   return (
     <div className='categories'>
       {categories.map((category, index) => (
@@ -19,7 +15,7 @@ export const Categories = ({ handleCategoryNameClick }) => {
               : 'categories--item'
           }
           onClick={e => {
-            handleClickForBackgroundColor(index);
+            setSelectedCategoryIndex(index);
             handleCategoryNameClick(e);
           }}
         >
