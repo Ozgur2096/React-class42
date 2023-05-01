@@ -7,34 +7,30 @@ export const Products = ({ categoryName }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    if (categoryName) {
+    const getCategories = async () => {
       setIsLoading(true);
-
-      const getCategories = async () => {
-        if (categoryName === 'all') {
-          try {
-            const response = await fetch('https://fakestoreapi.com/products');
-            const productsAll = await response.json();
-            setProducts(productsAll);
-          } catch (e) {
-            alert('Error: ' + e.message);
-          }
-        } else {
-          try {
-            const response = await fetch(
-              `https://fakestoreapi.com/products/category/${categoryName}`
-            );
-            const productsByCategory = await response.json();
-            setProducts(productsByCategory);
-          } catch (e) {
-            alert('Error: ' + e.message);
-          }
+      if (categoryName === 'all') {
+        try {
+          const response = await fetch('https://fakestoreapi.com/products');
+          const productsAll = await response.json();
+          setProducts(productsAll);
+        } catch (e) {
+          alert('Error: ' + e.message);
         }
-        setIsLoading(false);
-      };
-      getCategories();
-    }
-    categoryName = false;
+      } else {
+        try {
+          const response = await fetch(
+            `https://fakestoreapi.com/products/category/${categoryName}`
+          );
+          const productsByCategory = await response.json();
+          setProducts(productsByCategory);
+        } catch (e) {
+          alert('Error: ' + e.message);
+        }
+      }
+      setIsLoading(false);
+    };
+    getCategories();
   }, [categoryName]);
   return (
     <>
