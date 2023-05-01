@@ -7,9 +7,10 @@ function App() {
   const [category, setCategory] = useState('all');
 
   function handleCategoryNameClick(e) {
-    const category = e.target.textContent.slice(6);
+    const category = e.target.textContent;
     setCategory(category);
   }
+
   return (
     <div className='App'>
       <h1>Products</h1>

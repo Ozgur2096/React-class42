@@ -1,26 +1,60 @@
-import products from '../fake-data/all-products';
+import { useEffect, useState } from 'react';
 import { ProductsItem } from './ProductsItem';
+import { Link } from 'react-router-dom';
 
 export const Products = ({ categoryName }) => {
-  return (
-    <ul className='products'>
-      {categoryName === 'all'
-        ? products.map(product => {
-            return (
-              <li key={product.id} className='products--item'>
-                <ProductsItem product={product} />
-              </li>
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (categoryName) {
+      setIsLoading(true);
+
+      const getCategories = async () => {
+        if (categoryName === 'all') {
+          try {
+            const response = await fetch('https://fakestoreapi.com/products');
+            const productsAll = await response.json();
+            setProducts(productsAll);
+          } catch (e) {
+            alert('Error: ' + e.message);
+          }
+        } else {
+          try {
+            const response = await fetch(
+              `https://fakestoreapi.com/products/category/${categoryName}`
             );
-          })
-        : products
-            .filter(product => categoryName === product.category)
-            .map(product => {
-              return (
-                <li key={product.id} className='products--item'>
-                  <ProductsItem product={product} />
-                </li>
-              );
-            })}
-    </ul>
+            const productsByCategory = await response.json();
+            setProducts(productsByCategory);
+          } catch (e) {
+            alert('Error: ' + e.message);
+          }
+        }
+        setIsLoading(false);
+      };
+      getCategories();
+    }
+    categoryName = false;
+  }, [categoryName]);
+  return (
+    <>
+      {isLoading ? (
+        <div>Loading...</div>
+      ) : (
+        <ul className='products'>
+          {products.map(product => {
+            return (
+              <Link
+                key={product.id}
+                className='products--item'
+                to={`/product/${product.id}`}
+              >
+                <ProductsItem product={product} />
+              </Link>
+            );
+          })}
+        </ul>
+      )}
+    </>
   );
 };
