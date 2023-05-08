@@ -1,7 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { GlobalContext } from '../context/GlobalState';
 
-export const Categories = ({ handleCategoryNameClick }) => {
-  const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(null);
+export const Categories = () => {
+  const { selectedCategory, handleCategoryNameClick } =
+    useContext(GlobalContext);
+
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -17,16 +20,15 @@ export const Categories = ({ handleCategoryNameClick }) => {
 
   return (
     <div className='categories'>
-      {categories.map((category, index) => (
+      {categories.map(category => (
         <div
-          key={index}
+          key={category}
           className={
-            selectedCategoryIndex === index
+            selectedCategory === category
               ? 'categories--item categories--item-selected'
               : 'categories--item'
           }
           onClick={e => {
-            setSelectedCategoryIndex(index);
             handleCategoryNameClick(e);
           }}
         >

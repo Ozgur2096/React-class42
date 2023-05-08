@@ -1,37 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
 import { ProductsItem } from './ProductsItem';
 import { Link } from 'react-router-dom';
+import { GlobalContext } from '../context/GlobalState';
+import { useFetch } from '../auxiliary/useFetch';
 
-export const Products = ({ categoryName }) => {
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+export const Products = () => {
+  const { selectedCategory } = useContext(GlobalContext);
 
-  useEffect(() => {
-    const getCategories = async () => {
-      setIsLoading(true);
-      if (categoryName === 'all') {
-        try {
-          const response = await fetch('https://fakestoreapi.com/products');
-          const productsAll = await response.json();
-          setProducts(productsAll);
-        } catch (e) {
-          alert('Error: ' + e.message);
-        }
-      } else {
-        try {
-          const response = await fetch(
-            `https://fakestoreapi.com/products/category/${categoryName}`
-          );
-          const productsByCategory = await response.json();
-          setProducts(productsByCategory);
-        } catch (e) {
-          alert('Error: ' + e.message);
-        }
-      }
-      setIsLoading(false);
-    };
-    getCategories();
-  }, [categoryName]);
+  const url =
+    selectedCategory === 'all'
+      ? 'https://fakestoreapi.com/products'
+      : `https://fakestoreapi.com/products/category/${selectedCategory}`;
+  let [isLoading, products] = useFetch(url, selectedCategory);
+
   return (
     <>
       {isLoading ? (

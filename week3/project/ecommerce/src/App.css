@@ -90,6 +90,15 @@ img {
   margin-right: auto;
 }
 
+.nav {
+  margin-left: 8px;
+}
+
+.nav-link {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
 .product-details--information {
   align-items: center;
   display: flex;
@@ -119,6 +128,21 @@ img {
   max-height: 300px;
   object-fit: contain;
   width: 100%;
+}
+
+.product-image--favourite-container {
+  background-color: #fff;
+  cursor: pointer;
+  height: 20px;
+  padding: 8px;
+  position: absolute;
+  right: 0;
+  top: 20px;
+  width: 20px;
+}
+
+.product-image--favourite {
+  color: red;
 }
 
 .product-details--description {
