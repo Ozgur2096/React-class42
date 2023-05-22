@@ -7,7 +7,7 @@ export const Products = ({ categoryName }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const getCategories = async () => {
+    const getProducts = async () => {
       setIsLoading(true);
       if (categoryName === 'all') {
         try {
@@ -30,7 +30,7 @@ export const Products = ({ categoryName }) => {
       }
       setIsLoading(false);
     };
-    getCategories();
+    getProducts();
   }, [categoryName]);
   return (
     <>

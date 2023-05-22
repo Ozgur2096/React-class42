@@ -14,7 +14,10 @@ function App() {
   return (
     <div className='App'>
       <h1>Products</h1>
-      <Categories handleCategoryNameClick={handleCategoryNameClick} />
+      <Categories
+        handleCategoryNameClick={handleCategoryNameClick}
+        categoryName={category}
+      />
       <Products categoryName={category} />
     </div>
   );
