@@ -9,6 +9,7 @@ export const Categories = ({ handleCategoryNameClick }) => {
       {categories.map((category, index) => (
         <div
           key={index}
+          value={index}
           className={
             selectedCategoryIndex === index
               ? 'categories--item categories--item-selected'
